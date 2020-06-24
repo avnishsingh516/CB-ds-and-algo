@@ -17,5 +17,25 @@ int main() {
     cout << "without void* :- " << &ch;
     cout << (void *)&ch << endl;
 
+
+
+
+
+    //Pointers
+    int y1 = 20;
+
+    int *xptr;
+    //Store the address of a variable
+    xptr = &x;
+
+    cout << &x << endl;
+    cout << xptr << endl;
+
+    //Re-assign another address to the variable
+    xptr = &y1;
+    cout << &y1 << endl;
+    cout << xptr << endl;
+
+
     return 0;
 }
