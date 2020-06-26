@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// clear the  0 to ith bit
+// clear the ith to jth bit
 void clearRangeItoJbit(int &n , int i , int j) {
 
 	int ones = ~0; //or -1 => 1111...
