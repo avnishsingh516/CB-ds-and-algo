@@ -98,6 +98,33 @@ void insertInMiddle(node*&head , int data , int position) {
 	}
 }
 
+//delete the node at the head
+void deleteAtHead(node*&head) {
+
+	if (head == NULL) {
+		return;
+	}
+
+	node*temp = head;
+	head = head->next;
+	delete temp;
+
+}
+
+//delete the node at the tail
+void deleteAtTail(node*&head) {
+	node*prev = NULL;
+	node*temp = head;
+
+	while (temp->next != NULL) {
+		prev = temp;
+		temp = temp->next;
+	}
+
+	delete temp;
+	prev->next = NULL;
+}
+
 //print the all data present in the linked list
 //here we passing pointer variable by value , we dont want to change our linked list
 void print(node*temp) {
@@ -109,6 +136,7 @@ void print(node*temp) {
 		temp = temp->next;
 	}
 	cout << endl;
+
 }
 
 int main() {
@@ -132,6 +160,12 @@ int main() {
 	insertAtTail(head, 99);
 
 	print(head);
+
+	deleteAtHead(head);
+	deleteAtTail(head);
+
+	print(head);
+
 
 	return 0;
 }
