@@ -50,6 +50,7 @@ void insertAtTail(node*&head, int data) {
 
 	if (head == NULL) {
 		insertAtHead(head, data);
+		return;
 	}
 
 	node*tail = head;
@@ -125,6 +126,57 @@ void deleteAtTail(node*&head) {
 	prev->next = NULL;
 }
 
+//delete the node in the middle
+void deleteInMiddle(node*&head , int position) {
+	node*prev = NULL;
+	node*temp = head;
+
+	while (position) {
+		prev = temp;
+		temp = temp->next;
+		position--;
+	}
+
+	prev->next = temp->next;
+	delete temp;
+}
+
+//searching using recursive APPROACH
+bool searchRecursive(node*head , int key) {
+	//base case
+	if (head == NULL) {
+		cout << "not present";
+		return false;
+	}
+
+	//rec case
+	if (head->data == key) {
+		cout << "element present";
+		return true;
+	}
+	else {
+		return searchRecursive(head->next, key);
+	}
+}
+
+//searching using iterative approach
+bool searchIterative(node*head, int key) {
+
+	while (head != NULL) {
+
+		if (head->data == key) {
+			cout << "element present";
+			return true;
+		}
+		else {
+			head = head->next;
+		}
+	}
+	cout << "not present";
+	return false;
+}
+
+
 //print the all data present in the linked list
 //here we passing pointer variable by value , we dont want to change our linked list
 void print(node*temp) {
@@ -166,6 +218,12 @@ int main() {
 
 	print(head);
 
+	deleteInMiddle(head, 2);
+
+	print(head);
+
+	cout << "recursive approach :- " << searchRecursive(head, 10) << endl;
+	cout << "iterative approach:- " << searchIterative(head, 10) << endl;
 
 	return 0;
 }
