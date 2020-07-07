@@ -1,6 +1,5 @@
 // time :- O(n^2)
-//recursive approach to print the tree level wise
-
+//in this approach we do the preorder traversal
 #include <iostream>
 using namespace std;
 
@@ -35,7 +34,6 @@ node* buildTree() {
 }
 
 //returns the height of the tree
-// time:- O(n)
 int height(node*root) {
 	if (root == NULL) {
 		return 0;
@@ -50,56 +48,39 @@ int height(node*root) {
 
 }
 
-//print the kth level of the tree
-void kth_level_print(node*root , int k) {
-	// k:- kth level
+//diameter :- largest distance between 2 nodes
+//diameter = height of tree - 1
+//returns the diameter of the tree
+int diameter(node*root) {
 	if (root == NULL) {
-		return;
+		return 0;
 	}
 
-	if (k == 1) {
-		cout << root->data << " ";
-		return;
-	}
+	int h1 = height(root->left);
+	int h2 = height(root->right);
 
-	kth_level_print(root->left, k - 1);
-	kth_level_print(root->right, k - 1);
+	// op1 :- option 1, in which the diameter of the tree is present including the both side of the root
+	int op1 = h1 + h2;
 
+	//op2 :- option 2 , in which the diameter of the tree is present only the left side of the root
+	int op2 = diameter(root->left);
+
+	//op3 :- option 3 , in which the diameter of the tree is present only the right side of the root
+	int op3 = diameter(root->right);
+
+	return max(op1 , max(op2 , op3) );
 }
-
-//print the all level of the tree or print the tree in levelorder
-void level_Order_print(node*root) {
-	int H = height(root);
-
-	for (int i = 1 ; i <= H ; i++) {
-		kth_level_print(root, i);
-		cout << endl;
-	}
-
-	return;
-}
-
 
 int main(int argc, char const *argv[])
 {
 	node* root = buildTree();
 
-	// cout << height(root);
+	cout << diameter(root) << endl;
 
-	// kth_level_print(root, 3);
-
-	level_Order_print(root);
-
-	cout << endl;
 	return 0;
 }
 /*
 I/P:-
 8 10 1 -1 -1 6 9 -1 -1 7 -1 -1 3 -1 14 13 -1 -1 -1
 
-O/P:-
-8
-10 3
-1 6 14
-9 7 13
 */
