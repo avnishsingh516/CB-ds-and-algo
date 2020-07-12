@@ -49,6 +49,47 @@ class Hashtable {
 		return idx;
 	}
 
+	//rehash function
+	void rehash() {
+		// oldTable stores the address of the old table
+		node<T>** oldTable = table;
+		int oldTableSize = table_size;
+
+		table_size = table_size * 2  ; //always try to make table size a prime no.
+
+		//make the new table
+		table = new node<T>*[table_size];
+
+		for (int i = 0 ; i < table_size ; i++) {
+			table[i] = NULL;
+		}
+		current_size = 0;
+
+		// shift the elements from old table to new table
+		for (int i = 0 ; i < oldTableSize ; i++) {
+
+			node<T>*temp = oldTable[i];
+
+			while (temp != NULL) {
+				//insert in the new table
+				//since the table and table size is changed , so,it insert into the new table
+				insert(temp->key , temp->value);
+				temp = temp->next;
+			}
+
+			//delete the linked list from the row of the old table
+			if (oldTable[i] != NULL) {
+				//the ll is present at that row
+				delete oldTable[i];
+			}
+
+		}
+
+		//delete the old table
+		delete [] oldTable;
+
+	}
+
 
 public:
 
@@ -79,6 +120,11 @@ public:
 		current_size++;
 
 		// rehashing
+		float load_factor = current_size / float(table_size);
+
+		if (load_factor > 0.7) {
+			rehash();
+		}
 
 
 	}
