@@ -26,8 +26,8 @@ class Heap {
 	//makes the heap structure proper again after the poping
 	void heapify(int idx) {
 		// find the left and right child of the parent node which is present at idx index
-		int left = 2 * idx;
-		int right = 2 * idx + 1; //or left+1;
+		int left = 2 * idx + 1;
+		int right = 2 * idx + 2; //or left+1;
 
 		int min_idx = idx;
 		int last_idx = v.size() - 1;
@@ -56,9 +56,6 @@ public:
 	Heap(int default_size = 10 , bool type = true) {
 		v.reserve(default_size);
 
-		//we reserve or block the 0th index of the vector as -1 all the time
-		v.push_back(-1);
-
 		minHeap = type;
 	}
 
@@ -72,24 +69,24 @@ public:
 		int idx = v.size() - 1;
 
 		//find its parent index
-		int parent = idx / 2;
+		int parent = (idx - 1) / 2;
 
 		// keep pusing to the top till you reach node or stop midway because current element is already greater than parent for min heap and lesser for max heap
 		//we use compare function so it can be use for both the cases min heap and max heap
-		while (idx > 1 and compare(v[idx], v[parent] )) {
+		while (idx > 0 and compare(v[idx], v[parent] )) {
 			//swap the child with parent
 			swap(v[idx], v[parent]);
 
 			// now, child become parent
 			idx = parent;
-			parent = parent / 2;
+			parent = (parent - 1) / 2;
 		}
 
 	}
 
 	//top --> returns the top most element
 	int top() {
-		return v[1];
+		return v[0];
 	}
 
 	//pop --> deletion
@@ -97,17 +94,17 @@ public:
 
 		//swap the first and the last element
 		int last_idx = v.size() - 1;
-		swap(v[1], v[last_idx]);
+		swap(v[0], v[last_idx]);
 		//now root node comes to the last
 		//so delete it
 		v.pop_back();
 		// start the heapify the heap at the top of the heap
-		heapify(1);
+		heapify(0);
 	}
 
 	//returns the heap is empty or not
 	bool empty() {
-		return v.size() == 1;
+		return v.size() == 0;
 	}
 
 
@@ -118,10 +115,10 @@ int main(int argc, char const *argv[])
 	// by default the heap is min heap
 
 	//for min heap
-	Heap h;
+	// Heap h;
 
 	//for max heap
-	// Heap h(6, false);
+	Heap h(6, false);
 
 	// give some initial size
 	int n;
