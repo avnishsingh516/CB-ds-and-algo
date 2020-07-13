@@ -130,14 +130,61 @@ public:
 	}
 
 	// //searching
-	// T search(string key){
+	T* search(string key) {
+		// find index of that key to iterate
+		int idx = hashFn(key);
+		//iterate over the ll of that index
+		node<T>*temp = table[idx];
+		while (temp != NULL) {
+			if (temp->key == key) {
+				//found
+				return &(temp->value); //return the address of the value
+			}
+			temp = temp->next;
+		}
 
-	// }
+		//not found
+		return NULL; //for this we make search return type of the pointer type
+	}
 
 	// //deletion
-	// void erase(string key){
+	void erase(string key) {
+		int idx = hashFn(key);
+		node<T>* temp = table[idx];
+		if (search(key) == NULL) {
+			return;
+		}
+		//found at the head
+		if (temp->key == key) {
+			node<T>* tobeDeleted = temp;
+			table[idx] = temp->next;
+			tobeDeleted->next = NULL;
+			delete tobeDeleted;
+			return;
+		}
+		while (temp->next->key != key) {
+			temp = temp->next;
+		}
+		node<T>* tobeDeleted = temp->next;
+		temp->next = temp->next->next;
+		tobeDeleted->next = NULL;
+		delete tobeDeleted;
+		return;
+	}
 
-	// }
+	//oveloading
+	T& operator[](string key) {
+		T* add = NULL;
+		if (search(key) != NULL) {
+			add =  search(key);
+		}
+		else {
+			T val;
+			insert(key, val);
+			add = search(key);
+		}
+		return *add;
+	}
 
 	//print
 	void print() {
