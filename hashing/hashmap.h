@@ -158,10 +158,11 @@ public:
 		if (temp->key == key) {
 			node<T>* tobeDeleted = temp;
 			table[idx] = temp->next;
-			tobeDeleted->next = NULL;
+			tobeDeleted->next = NULL; //so the recursive destructor not called
 			delete tobeDeleted;
 			return;
 		}
+		//found at the middle or tail
 		while (temp->next->key != key) {
 			temp = temp->next;
 		}
